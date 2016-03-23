@@ -1,0 +1,38 @@
+//
+//  PrefixHeader.pch
+//  RedPacket
+//
+//  Created by mistong on 16/1/18.
+//  Copyright © 2016年 赵伟争. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import "AKSInfoMessageView.h"
+#import "InfoMessageView.h"
+#import "SFCountdownView.h"
+#import "AFHTTPSessionManager.h"
+#import <AVFoundation/AVFoundation.h>
+#import "UIImageView+WebCache.h"
+#define RGB(r,g,b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1]
+#define APP_DELEGATE ((AppDelegate *)[UIApplication sharedApplication].delegate)
+#define SCREEN_WIDTH  ([UIScreen mainScreen].bounds.size.width)
+#define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
+
+
+#define IMAGENAMED(NAME)        [UIImage imageNamed:NAME]
+#define Main_Screen_Width       [[UIScreen mainScreen] bounds].size.width
+#define Main_Screen_Height      [[UIScreen mainScreen] bounds].size.height
+#define IMAGE_X                arc4random()%(int)(Main_Screen_Width-200) + 100
+#define IMAGE_ALPHA            ((float)(arc4random()%10))/10
+#define IMAGE_WIDTH            arc4random()%20 + 60
+#define PLUS_HEIGHT            Main_Screen_Height/25
+
+//字体
+#define KFont(i)  [UIFont systemFontOfSize:i]
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+
+#endif /* PrefixHeader_pch */
