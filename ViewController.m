@@ -50,7 +50,7 @@
     //接口
     UILabel   *timesLabel; //用于显示每轮中奖的几个
     NSInteger speeds;      //请求的数据, 红包雨下落得速度
-    NSInteger luckynum;    //每轮获奖的总认识
+    NSInteger luckynum;    //每轮获奖的总人数
     CGPoint   clickFrame;  //点击红包的frame
     BOOL      clickSuccess;//接口成功或者失败
     NSMutableArray *clickArr; //点击数据储存
@@ -515,9 +515,6 @@ static int i = 0;
         
         //调取接口
         
-        
-        
-        
         CGPoint touchPoint = [tapGesture locationInView:self.view];
         clickFrame = touchPoint;
         for (int i = 0; i < _imagesLayer.count; i++) {
@@ -546,14 +543,14 @@ static int i = 0;
 
 #pragma mark - 18 为请求出的数字
 /**
- *  检测, 如果headerNumber>18则停止红包并实现现实所有的中奖名单
+ *  检测, 如果headerNumber>luckynum则停止红包并实现现实所有的中奖名单
  */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 
     
     if (self.headerNumber>=luckynum - 1) {
         
-         [myTimer setFireDate:[NSDate distantFuture]];
+        [myTimer setFireDate:[NSDate distantFuture]];
         for (int i = 0; i< _imagesLayer.count; i++) {
             UIImageView *imageView = [_imagesLayer objectAtIndex:i];
             imageView.hidden = YES;
@@ -758,10 +755,23 @@ static int i = 0;
                  [self basedOnTheDataWithInter:inter responseObject:responseObject];
              } else {
                 if ([inter isEqualToString:@"click"]) {
-                     //
-                    clickImage.image = [UIImage imageNamed:@"宝箱-2.png"];
-                    [self performSelector:@selector(fromValueJitter) withObject:self afterDelay:0.5];
-                    clickSuccess = NO;
+                     //点击未中奖
+                    /*
+                     clickImage.image = [UIImage imageNamed:@"宝箱-2.png"];
+                     [self performSelector:@selector(fromValueJitter) withObject:self afterDelay:0.5];
+                     clickSuccess = NO;
+                     */
+                    
+                    
+                    //测试用, 中奖了
+                    ClickModel *clickModel = [[ClickModel alloc] initWithDic:[responseObject objectForKey:@"data"]];
+                    [clickArr addObject:clickModel];
+                    //workNumber = clickModel.userNo;
+                    workNumber = @"123";//测试
+                    
+                    clickSuccess = YES;
+                    clickImage.image = [UIImage imageNamed:@"宝箱.png"];
+                    [self performSelector:@selector(fromValueJitterT) withObject:self afterDelay:0.5];
                  }
              
              }
@@ -773,9 +783,20 @@ static int i = 0;
              
              if ([inter isEqualToString:@"click"]) {
                  //
-                 clickImage.image = [UIImage imageNamed:@"宝箱-2.png"];
-                 [self performSelector:@selector(fromValueJitter) withObject:self afterDelay:0.5];
-                 clickSuccess = NO;
+//                 clickImage.image = [UIImage imageNamed:@"宝箱-2.png"];
+//                 [self performSelector:@selector(fromValueJitter) withObject:self afterDelay:0.5];
+//                 clickSuccess = NO;
+                 
+                 NSDictionary *dic = @{@"userno":@"123", @"realname":@"赵伟争"};
+                 //测试用, 中奖了
+                 ClickModel *clickModel = [[ClickModel alloc] initWithDic:dic];
+                 [clickArr addObject:clickModel];
+                 //workNumber = clickModel.userNo;
+                 workNumber = @"123";//测试
+                 
+                 clickSuccess = YES;
+                 clickImage.image = [UIImage imageNamed:@"宝箱.png"];
+                 [self performSelector:@selector(fromValueJitterT) withObject:self afterDelay:0.5];
              }
              NSLog(@"%@", error);
               
@@ -789,7 +810,9 @@ static int i = 0;
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        NSString *text = [NSString stringWithFormat:@"%@", [responseObject objectForKey:@"luckyname"]];
         
         luckynum = [[responseObject objectForKey:@"luckynum"] integerValue];
+        luckynum = 20;//测试
         speeds = [[responseObject objectForKey:@"downspeed"] integerValue];
+        speeds = 4;
         [self getTimesWithText:text luckynum:luckynum];
         
     } else if ([inter isEqualToString:@"person"]) {
@@ -798,7 +821,8 @@ static int i = 0;
         
         ClickModel *clickModel = [[ClickModel alloc] initWithDic:[responseObject objectForKey:@"data"]];
         [clickArr addObject:clickModel];
-        workNumber = clickModel.userNo;
+        //workNumber = clickModel.userNo;
+        workNumber = @"123";//测试
         
         clickSuccess = YES;
         clickImage.image = [UIImage imageNamed:@"宝箱.png"];
