@@ -10,4 +10,4 @@
       b. 开始落红包雨, 红包雨的快慢和数量都是有接口去控制  <br>
       c. 点击红包, (也是调用接口判断是否中奖), 中抖动一下显示宝箱, 不中抖动一下显示空宝箱<br>
       d. 中奖名单会均匀的分布在两侧, 会遮盖住工号和头像, 等每轮中奖人数抽完之后 会把所有中奖人显示到圣旨上<br>
-![](https://github.com/zhaoweizheng/RedPacket/raw/master/开场字体显示.gif)
+![](https://github.com/zhaoweizheng/RedPacket/开场字体显示.gif )
